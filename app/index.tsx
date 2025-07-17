@@ -1,7 +1,7 @@
 import '../global.css';
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Button } from 'app/atoms';
+import { Button } from './atoms';
 import { router } from 'expo-router';
 
 const Intro: React.FC = () => {
