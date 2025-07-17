@@ -1,85 +1,106 @@
 import './global.css';
 import { useState } from 'react';
-import { View, TextInput, Text, Pressable, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {
+  View,
+  TextInput,
+  Text,
+  Pressable,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import Svg, { Circle, Rect, Path } from 'react-native-svg';
+import { useFonts } from 'expo-font';
+import {
+  NunitoSans_400Regular,
+  NunitoSans_700Bold,
+} from '@expo-google-fonts/nunito-sans';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+
+  const [fontsLoaded] = useFonts({
+    NunitoSans_400Regular,
+    NunitoSans_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
-    <View>
-      <View>
-        <Text>Phoenix</Text>
-      </View>
+  <SafeAreaView className="bg-primary flex-1">
+    <View className="bg-primary h-14 items-center justify-center shadow-md">
+      <Text className="text-accent text-[22px] font-bold tracking-[2px] uppercase">
+        Phoenix
+      </Text>
+    </View>
 
-      <View style={{ alignItems: 'center', marginVertical: 24 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Svg
-        width={24}
-        height={24}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-          >
-        <Circle cx={12} cy={16} r={1} />
-        <Rect x={3} y={10} width={18} height={12} rx={2} />
-        <Path d="M7 10V7a5 5 0 0 1 10 0v3" />
-          </Svg>
-        </View>
-          <Text style={{ marginLeft: 8, fontSize: 18, fontWeight: 'bold' }}>Patient Sign In</Text>
-      </View>
-
-        <View>
-          <View>
-            <View>
-              <TextInput
-                placeholder="Email Address"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-              <Text>Email Address</Text>
-            </View>
+<ScrollView className='bg-white' contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start' }}>
+      <View className=" items-center px-4 pt-20">
+        <View className="w-full max-w-sm">
+          <View className="bg-primary p-3 rounded-md mb-3 self-center">
+            <Svg
+              width={18}
+              height={18}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#f59e42"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round">
+              <Circle cx={12} cy={16} r={1} />
+              <Rect x={3} y={10} width={18} height={12} rx={2} />
+              <Path d="M7 10V7a5 5 0 0 1 10 0v3" />
+            </Svg>
           </View>
 
-          <View>
-            <View>
-              <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword}
-                autoCapitalize="none"
-              />
-              <Text>Password</Text>
-              <Pressable onPress={() => setShowPassword(!showPassword)}>
-                <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={20} color="gray" />
-              </Pressable>
-            </View>
-          </View>
+          <Text className="text-base font-nonito text-center mb-6 text-neutral-800">
+            Patient Sign In
+          </Text>
 
-          <Pressable>
-            <Text>Sign In</Text>
+          <TextInput
+            className="w-full border border-gray-100 rounded-md px-4 py-5 mb-6 text-sm"
+            placeholder="Email Address"
+            placeholderTextColor="#A0A0A0"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            className="w-full border border-gray-100 rounded-md px-4 py-5 mb-6 text-sm"
+            placeholder="Password"
+            placeholderTextColor="#A0A0A0"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          <Pressable className="bg-primary w-full rounded-md py-3 mb-4">
+            <Text className="text-white text-center text-base font-nunito">
+              Sign In
+            </Text>
           </Pressable>
 
-          <View>
-            <Text>Forgot your password?</Text>
-            <Text>Start your new treatment here</Text>
-          </View>
-
-          <View>
-            <Text>
-              © 2025 <Text>Phoenix Digital Health Inc.</Text>
+          <TouchableOpacity className="mb-2">
+            <Text className="text-link text-sm text-center underline">
+              Start your new treatment here
             </Text>
-          </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity className="mb-2">
+            <Text className="text-link text-sm text-center underline">
+              Forgot your password?
+            </Text>
+          </TouchableOpacity>
+
+          <Text className="text-xs text-gray-400 mt-2 text-center">
+            Copyright © Phoenix Digital Health Inc. 2025
+          </Text>
         </View>
-    </View>
-  );
+      </View>
+    </ScrollView>
+  </SafeAreaView>
+);
 }
